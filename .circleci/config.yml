@@ -136,7 +136,6 @@ jobs:
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
       - slack/notify:
-          channel: lampqt-circleci
           event: fail
           template: basic_fail_1
       - save_cache:
