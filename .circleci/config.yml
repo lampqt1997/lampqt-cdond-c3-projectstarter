@@ -136,7 +136,9 @@ jobs:
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
       - slack/notify:
-          event: always
+          channel: lampqt
+          event: fail
+          template: basic_fail_1
       - save_cache:
           paths: [ backend/node_modules ]
           key: backend-scan
@@ -318,7 +320,6 @@ workflows:
           requires: [build-backend]
       - scan-backend:
           requires: [build-backend]
-          context: slack-secrets
       - scan-frontend:
           requires: [build-frontend]
 #      - deploy-infrastructure:
