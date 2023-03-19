@@ -143,6 +143,7 @@ jobs:
       - slack/notify:
           event: fail
           template: basic_fail_1
+          channel: lampqt-circleci
       - save_cache:
           paths: [ backend/node_modules ]
           key: backend-scan
