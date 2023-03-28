@@ -203,7 +203,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - 'b0:b1:6b:8e:75:23:d4:d2:e4:46:b3:c0:5a:e1:85:dc:cd:62:c5:6f'
+            - 'b0:b1:6b:8e:75:23:d4:d2:e4:46:b3:c0:5a:e1:85:dc'
       - run:
           name: Install dependencies
           command: |
@@ -361,13 +361,13 @@ workflows:
 #          requires: [build-backend]
 #      - scan-frontend:
 #          requires: [build-frontend]
-      - deploy-infrastructure:
-          requires: [build-frontend, build-backend]
+#      - deploy-infrastructure:
+#          requires: [build-frontend, build-backend]
 #          filters:
 #            branches:
 #              only: [test-feature-branch]
       - configure-infrastructure:
-          requires: [deploy-infrastructure]
+#          requires: [deploy-infrastructure]
 #      - run-migrations:
 #          requires: [configure-infrastructure]
 #      - deploy-frontend:
