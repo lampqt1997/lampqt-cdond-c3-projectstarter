@@ -173,7 +173,7 @@ jobs:
               --template-file .circleci/files/backend.yml \
               --tags project=udapeople \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides "ID=${CIRCLE_WORKFLOW_ID:0:7}" "SSH_PUBLIC_KEY=${SSH_PUBLIC_KEY}"
+              --parameter-overrides "ID=${CIRCLE_WORKFLOW_ID:0:7}" "SSHPublicKey=${SSH_PUBLIC_KEY}"
       - run:
           name: Ensure front-end infrastructure exist
           command: |
