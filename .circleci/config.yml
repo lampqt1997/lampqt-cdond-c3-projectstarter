@@ -173,7 +173,7 @@ jobs:
               --template-file .circleci/files/backend.yml \
               --tags project=udapeople \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides "ID=${CIRCLE_WORKFLOW_ID:0:7}" "SSHPublicKey=${SSH_PUBLIC_KEY}"
+              --parameter-overrides "ID=${CIRCLE_WORKFLOW_ID:0:7}"
       - run:
           name: Ensure front-end infrastructure exist
           command: |
@@ -207,7 +207,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - 'b0:b1:6b:8e:75:23:d4:d2:e4:46:b3:c0:5a:e1:85:dc:cd:62:c5:6f'
+            - '4c:ed:a4:62:02:fb:20:10:00:1e:a4:cf:48:7f:71:ba'
       - run:
           name: Install dependencies
           command: |

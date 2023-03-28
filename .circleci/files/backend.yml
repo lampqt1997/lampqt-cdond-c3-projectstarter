@@ -5,9 +5,7 @@ Parameters:
   ID:
     Description: Unique identifier.
     Type: String
-  SSHPublicKey:
-    Description: Value of keypair to config server.
-    Type: String
+
 Resources:
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -37,17 +35,4 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub backend-${ID}
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash
-          set -e
-          # Install Git and OpenSSH
-          apt-get update
-          apt-get install -y git openssh-server
-          # Configure SSH
-          mkdir -p /home/ubuntu/.ssh
-          echo "${SSHPublicKey}" >> /home/ubuntu/.ssh/authorized_keys
-          chmod 600 /home/ubuntu/.ssh/authorized_keys
-          chown -R ubuntu:ubuntu /home/ubuntu/.ssh
-          sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/g' /etc/ssh/sshd_config
-          systemctl restart sshd
+
