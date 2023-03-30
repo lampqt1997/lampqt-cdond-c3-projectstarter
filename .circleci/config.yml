@@ -433,7 +433,7 @@ workflows:
           requires: [build-frontend, build-backend]
           filters:
             branches:
-              only: [dev-branch]
+              only: [master]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
       - run-migrations:
