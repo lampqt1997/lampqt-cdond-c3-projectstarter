@@ -42,6 +42,7 @@ commands:
           when: on_fail
           command: |
             SUCCESS=$(curl --insecure  https://kvdb.io/BDEAKJSkNeSRkXKTviyNYR/migration_<< parameters.workflow_id >>)
+            echo $SUCCESS
             if(( $SUCCESS==1 )); 
             then
               cd ~/project/backend
@@ -275,6 +276,8 @@ jobs:
             fi
             pwd; ls -la;
             cat ~/project/backend/migrations.txt
+            SUCCESS=$(curl --insecure  https://kvdb.io/BDEAKJSkNeSRkXKTviyNYR/migration_${CIRCLE_WORKFLOW_ID:0:7})
+            echo $SUCCESS
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
 
