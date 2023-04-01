@@ -358,7 +358,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update --no-cache curl aws-cli nodejs npm curl
+            apk add --update --no-cache curl aws-cli nodejs npm curl iptables
       - run:
           name: Frontend smoke test.
           command: |
@@ -371,8 +371,17 @@ jobs:
               return 1
             fi
       - run:
+          name: check firewall
+          command: |
+            curl -I https://www.google.com
+            iptables -L
+            iptables -A INPUT -p tcp --dport 3030 -j ACCEPT
+            iptables -A OUTPUT -p tcp --dport 3030 -j ACCEPT
+            iptables-save > /etc/iptables/rules.v4
+      - run:
           name: Backend smoke test
           command: |
+            
             export BACKEND_IP=$(aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters Name=tag:aws:cloudformation:stack-name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} \
