@@ -314,7 +314,6 @@ jobs:
 
 
   deploy-backend:
-    timeout: 1200
     docker:
       - image: python:3.7-alpine3.16
     steps:
@@ -446,6 +445,7 @@ workflows:
       - deploy-frontend:
           requires: [run-migrations]
       - deploy-backend:
+          timeout: 1200
           requires: [run-migrations]
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
