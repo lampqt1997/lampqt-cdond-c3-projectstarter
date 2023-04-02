@@ -314,9 +314,10 @@ jobs:
 
 
   deploy-backend:
-    docker:
-      - image: python:3.7-alpine3.16
-    timeout: 1200
+    machine:
+      image: python:3.7-alpine3.16
+      timeout: 1200
+
     steps:
       - checkout
       - add_ssh_keys:
