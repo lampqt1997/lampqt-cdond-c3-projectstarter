@@ -315,8 +315,10 @@ jobs:
 
   deploy-backend:
     machine:
-      image: python:3.7-alpine3.16
-      timeout: 1200
+      enabled: true
+    timeout: 1200
+    docker:
+      - image: python:3.7-alpine3.16
 
     steps:
       - checkout
