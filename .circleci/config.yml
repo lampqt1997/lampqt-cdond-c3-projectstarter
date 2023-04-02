@@ -314,11 +314,8 @@ jobs:
 
 
   deploy-backend:
-    machine:
-      resource_class: medium
-      enabled: true
-      image: circleci/python:3.7.12-alpine-20210819
-
+    docker:
+      - image: python:3.7-alpine3.16
     steps:
       - checkout
       - add_ssh_keys:
