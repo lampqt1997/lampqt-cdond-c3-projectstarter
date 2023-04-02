@@ -371,16 +371,6 @@ jobs:
               return 1
             fi
       - run:
-          name: check firewall
-          command: |
-            curl -I https://www.google.com
-            echo "check firewall"
-            su -
-            iptables -L
-            iptables -A INPUT -p tcp --dport 3030 -j ACCEPT
-            iptables -A OUTPUT -p tcp --dport 3030 -j ACCEPT
-            iptables-save > /etc/iptables/rules.v4
-      - run:
           name: Backend smoke test
           command: |
             
