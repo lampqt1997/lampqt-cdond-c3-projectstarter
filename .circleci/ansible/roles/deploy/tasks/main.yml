@@ -37,7 +37,6 @@
   shell: |
     cd /home/ubuntu/web/backend
     tar -vxf artifact.tar.gz
-    rm -f artifact.tar.gz
   args:
     chdir: /home/ubuntu/backend
 - name: start app
