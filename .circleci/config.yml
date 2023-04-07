@@ -38,15 +38,14 @@ commands:
           when: on_fail
           command: |
             apk add --update --no-cache curl
-            export SUCCESS=$(curl --insecure  https://kvdb.io/BDEAKJSkNeSRkXKTviyNYR/migration_<< parameters.workflow_id >>)
+            export SUCCESS=$(curl --insecure https://kvdb.io/BDEAKJSkNeSRkXKTviyNYR/migration_${CIRCLE_WORKFLOW_ID:0:7})
             echo $SUCCESS
-            if (( SUCCESS == 1 )); 
-            then
+            if [ "$SUCCESS" -eq 1 ]; then
               echo "------start revert------"
               cd ~/project/backend
               npm install
               npm run migration:revert
-            else 
+            else
               echo "------don't revert------"
             fi
             
