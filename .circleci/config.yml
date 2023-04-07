@@ -40,7 +40,7 @@ commands:
             apk add --update --no-cache curl
             export SUCCESS=$(curl --insecure  https://kvdb.io/BDEAKJSkNeSRkXKTviyNYR/migration_<< parameters.workflow_id >>)
             echo $SUCCESS
-            if(( $SUCCESS == 1 )); 
+            if (( SUCCESS == 1 )); 
             then
               echo "------start revert------"
               cd ~/project/backend
