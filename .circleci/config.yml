@@ -429,7 +429,7 @@ jobs:
             --query "StackSummaries[*].StackName" \
             --stack-status-filter CREATE_COMPLETE --no-paginate --output text)
             echo Stack names: "${STACKS[@]}"    
-            export currentWorkflowId=<<parameters.workflow_id>>
+            export currentWorkflowId=${CIRCLE_WORKFLOW_ID:0:7}
             OldWorkflowIDs=()
             for stack in "${STACKS[@]}"; do
               numeric_portion="${stack##*-}"
