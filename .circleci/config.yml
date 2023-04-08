@@ -431,6 +431,8 @@ jobs:
             echo Stack names: "${STACKS[@]}"    
             export currentWorkflowId=${CIRCLE_WORKFLOW_ID:0:7}
             OldWorkflowIDs=()
+            import re
+            STACKS = re.split(r'\s+', STACKS)
             for stack in "${STACKS[@]}"; do
               numeric_portion="${stack##*-}"
               echo "stack ${stack}"
