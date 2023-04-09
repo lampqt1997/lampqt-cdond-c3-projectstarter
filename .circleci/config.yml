@@ -429,15 +429,17 @@ jobs:
             --query "StackSummaries[*].StackName" \
             --stack-status-filter CREATE_COMPLETE --no-paginate --output text)
             echo Stack names: "${STACKS[@]}"    
-            export currentWorkflowId=${CIRCLE_WORKFLOW_ID:0:7}
+            export currentWorkflowId=54e76a1
             oldWorkflowIds=()
             stack_list=($(echo "$STACKS" | awk '{for(i=1;i<=NF;i++)print $i}'))
+            echo "stack_list: ${stack_list}"
             for stack in "${stack_list[@]}"; do
               numeric_portion="${stack##*-}"
-              echo "stack ${stack}"
-              echo "numeric_portion ${numeric_portion}"
               if [[ "$stack" != *"$currentWorkflowId"* ]]; then
                 oldWorkflowIds+=("$numeric_portion")
+                echo "stack ${stack}"
+                echo "numeric_portion ${numeric_portion}"
+                echo "oldWorkflowIds ${oldWorkflowIds}"
               fi
             done
             echo oldWorkflowIds: "${oldWorkflowIds}"
@@ -486,23 +488,23 @@ workflows:
 #          requires: [build-backend]
 #      - scan-frontend:
 #          requires: [build-frontend]
-      - deploy-infrastructure:
-          filters:
-            branches:
-              only: [master]
-      - add-prometheus-node-exporter:
-          requires: [deploy-infrastructure]
-      - configure-infrastructure:
-          requires: [add-prometheus-node-exporter]
-      - run-migrations:
-          requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [run-migrations]
-      - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
-      - cloudfront-update:
-          requires: [smoke-test]
-      - cleanup:
-          requires: [cloudfront-update, add-prometheus-node-exporter]
+#      - deploy-infrastructure:
+#          filters:
+#            branches:
+#              only: [master]
+#      - add-prometheus-node-exporter:
+#          requires: [deploy-infrastructure]
+#      - configure-infrastructure:
+#          requires: [add-prometheus-node-exporter]
+#      - run-migrations:
+#          requires: [configure-infrastructure]
+#      - deploy-frontend:
+#          requires: [run-migrations]
+#      - deploy-backend:
+#          requires: [run-migrations]
+#      - smoke-test:
+#          requires: [deploy-backend, deploy-frontend]
+#      - cloudfront-update:
+#          requires: [smoke-test]
+      - cleanup
+#          requires: [cloudfront-update, add-prometheus-node-exporter]
