@@ -1,0 +1,3 @@
+[URL01]=https://github.com/lampqt1997/lampqt-cdond-c3-projectstarter
+
+[URL02]=http://udapeople-9ee80ef.s3-website-us-east-1.amazonaws.com/#/employees
