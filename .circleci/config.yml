@@ -446,11 +446,10 @@ jobs:
             
             for oldWorkflowID in "${oldWorkflowIds[@]}"; do
               echo "-------------------- Delete confirm ${oldWorkflowID} -----------------------"
-#              aws s3 rm "s3://udapeople-${oldWorkflowID}" --recursive
-#              aws cloudformation delete-stack --stack-name "udapeople-backend-${oldWorkflowID}"
-#              aws cloudformation delete-stack --stack-name "udapeople-frontend-${oldWorkflowID}"
             done
-
+  #              aws s3 rm "s3://udapeople-${oldWorkflowID}" --recursive
+  #              aws cloudformation delete-stack --stack-name "udapeople-backend-${oldWorkflowID}"
+  #              aws cloudformation delete-stack --stack-name "udapeople-frontend-${oldWorkflowID}"
   add-prometheus-node-exporter:
     docker:
       - image: python:3.7-alpine3.16
