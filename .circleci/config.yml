@@ -435,7 +435,7 @@ jobs:
             echo "stack_list: ${stack_list[@]}"
             for stack in "${stack_list[@]}"; do
               numeric_portion="${stack##*-}"
-              if [[ "$stack" != *"$currentWorkflowId"* ]]; then
+              if [[ "$numeric_portion" != "$currentWorkflowId" ]]; then
                 oldWorkflowIds+=("$numeric_portion")
                 echo "----stack ${stack}"
                 echo "----numeric_portion ${numeric_portion}"
