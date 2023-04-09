@@ -439,16 +439,16 @@ jobs:
                 oldWorkflowIds+=("$numeric_portion")
                 echo "----stack ${stack}"
                 echo "----numeric_portion ${numeric_portion}"
-                echo "----oldWorkflowIds ${oldWorkflowIds}"
+                 echo "----oldWorkflowIds ${oldWorkflowIds[@]}"
               fi
             done
             echo oldWorkflowIds: "${oldWorkflowIds}"
             
-            for oldWorkflowID in "${oldWorkflowIDs[@]}"; do
+            for oldWorkflowID in "${oldWorkflowIds[@]}"; do
               echo "-------------------- Delete confirm ${oldWorkflowID} -----------------------"
-              aws s3 rm "s3://udapeople-${oldWorkflowID}" --recursive
-              aws cloudformation delete-stack --stack-name "udapeople-backend-${oldWorkflowID}"
-              aws cloudformation delete-stack --stack-name "udapeople-frontend-${oldWorkflowID}"
+#              aws s3 rm "s3://udapeople-${oldWorkflowID}" --recursive
+#              aws cloudformation delete-stack --stack-name "udapeople-backend-${oldWorkflowID}"
+#              aws cloudformation delete-stack --stack-name "udapeople-frontend-${oldWorkflowID}"
             done
 
   add-prometheus-node-exporter:
