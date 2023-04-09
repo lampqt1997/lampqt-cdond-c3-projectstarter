@@ -428,8 +428,7 @@ jobs:
             export STACKS=$(aws cloudformation list-stacks \
             --query "StackSummaries[*].StackName" \
             --stack-status-filter CREATE_COMPLETE --no-paginate --output text)
-            echo Stack names: "${STACKS[@]}"    
-            export currentWorkflowId=54e76a1
+            export currentWorkflowId=${CIRCLE_WORKFLOW_ID:0:7}
             oldWorkflowIds=()
             stack_list=($(echo "$STACKS" | awk '{for(i=1;i<=NF;i++)print $i}'))
             echo "stack_list: ${stack_list[@]}"
@@ -437,19 +436,17 @@ jobs:
               numeric_portion="${stack##*-}"
               if [[ "$numeric_portion" != "$currentWorkflowId" ]]; then
                 oldWorkflowIds+=("$numeric_portion")
-                echo "----stack ${stack}"
-                echo "----numeric_portion ${numeric_portion}"
-                 echo "----oldWorkflowIds ${oldWorkflowIds[@]}"
               fi
             done
-            echo oldWorkflowIds: "${oldWorkflowIds}"
+            echo "oldWorkflowIds: ${oldWorkflowIds[@]}"
             
             for oldWorkflowID in "${oldWorkflowIds[@]}"; do
               echo "-------------------- Delete confirm ${oldWorkflowID} -----------------------"
+              aws s3 rm "s3://udapeople-${oldWorkflowID}" --recursive
+              aws cloudformation delete-stack --stack-name "udapeople-backend-${oldWorkflowID}"
+              aws cloudformation delete-stack --stack-name "udapeople-frontend-${oldWorkflowID}"
             done
-  #              aws s3 rm "s3://udapeople-${oldWorkflowID}" --recursive
-  #              aws cloudformation delete-stack --stack-name "udapeople-backend-${oldWorkflowID}"
-  #              aws cloudformation delete-stack --stack-name "udapeople-frontend-${oldWorkflowID}"
+
   add-prometheus-node-exporter:
     docker:
       - image: python:3.7-alpine3.16
@@ -477,33 +474,33 @@ jobs:
 workflows:
   default:
     jobs:
-#      - build-frontend
-#      - build-backend
-#      - test-frontend:
-#          requires: [build-frontend]
-#      - test-backend:
-#          requires: [build-backend]
-#      - scan-backend:
-#          requires: [build-backend]
-#      - scan-frontend:
-#          requires: [build-frontend]
-#      - deploy-infrastructure:
-#          filters:
-#            branches:
-#              only: [master]
-#      - add-prometheus-node-exporter:
-#          requires: [deploy-infrastructure]
-#      - configure-infrastructure:
-#          requires: [add-prometheus-node-exporter]
-#      - run-migrations:
-#          requires: [configure-infrastructure]
-#      - deploy-frontend:
-#          requires: [run-migrations]
-#      - deploy-backend:
-#          requires: [run-migrations]
-#      - smoke-test:
-#          requires: [deploy-backend, deploy-frontend]
-#      - cloudfront-update:
-#          requires: [smoke-test]
-      - cleanup
-#          requires: [cloudfront-update, add-prometheus-node-exporter]
+      - build-frontend
+      - build-backend
+      - test-frontend:
+          requires: [build-frontend]
+      - test-backend:
+          requires: [build-backend]
+      - scan-backend:
+          requires: [build-backend]
+      - scan-frontend:
+          requires: [build-frontend]
+      - deploy-infrastructure:
+          filters:
+            branches:
+              only: [master]
+      - add-prometheus-node-exporter:
+          requires: [deploy-infrastructure]
+      - configure-infrastructure:
+          requires: [add-prometheus-node-exporter]
+      - run-migrations:
+          requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
+      - deploy-backend:
+          requires: [run-migrations]
+      - smoke-test:
+          requires: [deploy-backend, deploy-frontend]
+      - cloudfront-update:
+          requires: [smoke-test]
+      - cleanup:
+          requires: [cloudfront-update, add-prometheus-node-exporter]
