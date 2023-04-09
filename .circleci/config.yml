@@ -432,14 +432,14 @@ jobs:
             export currentWorkflowId=54e76a1
             oldWorkflowIds=()
             stack_list=($(echo "$STACKS" | awk '{for(i=1;i<=NF;i++)print $i}'))
-            echo "stack_list: ${stack_list}"
+            echo "stack_list: ${stack_list[@]}"
             for stack in "${stack_list[@]}"; do
               numeric_portion="${stack##*-}"
               if [[ "$stack" != *"$currentWorkflowId"* ]]; then
                 oldWorkflowIds+=("$numeric_portion")
-                echo "stack ${stack}"
-                echo "numeric_portion ${numeric_portion}"
-                echo "oldWorkflowIds ${oldWorkflowIds}"
+                echo "----stack ${stack}"
+                echo "----numeric_portion ${numeric_portion}"
+                echo "----oldWorkflowIds ${oldWorkflowIds}"
               fi
             done
             echo oldWorkflowIds: "${oldWorkflowIds}"
